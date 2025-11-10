@@ -1,0 +1,2017 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kadak Junction - Complete POS System</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .login-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .login-form {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            max-width: 400px;
+            width: 90%;
+        }
+
+        .login-form h2 {
+            text-align: center;
+            color: #ff6b35;
+            margin-bottom: 30px;
+            font-size: 2em;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 6px;
+            font-size: 1em;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus, .form-group select:focus {
+            outline: none;
+            border-color: #ff6b35;
+        }
+
+        .header {
+            background: linear-gradient(45deg, #ff6b35, #f7931e);
+            color: white;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .header-left h1 {
+            font-size: 2.2em;
+            margin-bottom: 5px;
+        }
+
+        .header-right {
+            text-align: right;
+        }
+
+        .staff-info {
+            font-size: 1.1em;
+            margin-bottom: 10px;
+        }
+
+        .logout-btn {
+            background: rgba(255,255,255,0.2);
+            color: white;
+            border: 1px solid rgba(255,255,255,0.3);
+            padding: 8px 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .logout-btn:hover {
+            background: rgba(255,255,255,0.3);
+        }
+
+        .nav-tabs {
+            display: flex;
+            background: white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            overflow-x: auto;
+        }
+
+        .tab {
+            flex: 1;
+            padding: 15px;
+            background: #f8f9fa;
+            border: none;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            border-bottom: 3px solid transparent;
+            min-width: 120px;
+        }
+
+        .tab.active {
+            background: white;
+            border-bottom: 3px solid #ff6b35;
+            color: #ff6b35;
+        }
+
+        .tab:hover {
+            background: #e9ecef;
+        }
+
+        .tab-content {
+            display: none;
+            padding: 20px;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Billing Tab Styles */
+        .billing-container {
+            display: grid;
+            grid-template-columns: 300px 1fr 350px;
+            gap: 20px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .table-selection, .menu-section, .billing-section, .customer-section {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .section-title {
+            font-size: 1.3em;
+            color: #343a40;
+            margin-bottom: 15px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid #ff6b35;
+        }
+
+        .tables-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        .table-btn {
+            padding: 15px;
+            border: 2px solid #dee2e6;
+            border-radius: 8px;
+            background: white;
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .table-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+        }
+
+        .table-btn.selected {
+            border-color: #ff6b35;
+            background: #fff3e0;
+            color: #ff6b35;
+        }
+
+        .table-btn.occupied {
+            border-color: #dc3545;
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .table-number {
+            font-size: 1.2em;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .table-status {
+            font-size: 0.8em;
+            opacity: 0.7;
+        }
+
+        .table-amount {
+            font-size: 0.9em;
+            font-weight: bold;
+            color: #28a745;
+            margin-top: 5px;
+        }
+
+        .customer-details {
+            margin-bottom: 20px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+
+        .customer-row {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .customer-row input {
+            flex: 1;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        .menu-section {
+            max-height: 600px;
+            overflow-y: auto;
+        }
+
+        .menu-category {
+            margin-bottom: 20px;
+        }
+
+        .category-title {
+            font-size: 1em;
+            color: #495057;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        .menu-items {
+            display: grid;
+            gap: 8px;
+        }
+
+        .menu-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px;
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            position: relative;
+        }
+
+        .menu-item:hover {
+            background: #e3f2fd;
+            border-color: #2196f3;
+            transform: translateY(-1px);
+        }
+
+        .menu-item.clicked {
+            background: #c8e6c9;
+            border-color: #4caf50;
+        }
+
+        .menu-item.low-stock {
+            background: #fff3cd;
+            border-color: #ffc107;
+        }
+
+        .menu-item.out-of-stock {
+            background: #f8d7da;
+            border-color: #dc3545;
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .stock-indicator {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            font-size: 0.7em;
+            padding: 2px 6px;
+            border-radius: 10px;
+            background: #28a745;
+            color: white;
+        }
+
+        .stock-indicator.low {
+            background: #ffc107;
+            color: #333;
+        }
+
+        .stock-indicator.out {
+            background: #dc3545;
+        }
+
+        .current-table {
+            background: linear-gradient(45deg, #ff6b35, #f7931e);
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 1.1em;
+            font-weight: bold;
+        }
+
+        .current-bill {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 20px;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .bill-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 0;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        .quantity-controls {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .qty-btn {
+            background: #ff6b35;
+            color: white;
+            border: none;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+        }
+
+        .qty-btn:hover {
+            background: #e55a2b;
+        }
+
+        .bill-summary {
+            background: white;
+            border: 2px solid #ff6b35;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            padding: 5px 0;
+        }
+
+        .summary-row.total {
+            border-top: 2px solid #ff6b35;
+            font-weight: bold;
+            font-size: 1.2em;
+            color: #28a745;
+            margin-top: 10px;
+            padding-top: 10px;
+        }
+
+        .gst-toggle {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+            padding: 10px;
+            background: #e3f2fd;
+            border-radius: 6px;
+        }
+
+        .action-buttons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        .btn {
+            padding: 12px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: 500;
+            transition: all 0.2s ease;
+        }
+
+        .btn-print {
+            background: #28a745;
+            color: white;
+        }
+
+        .btn-print:hover {
+            background: #218838;
+        }
+
+        .btn-print:disabled {
+            background: #6c757d;
+            cursor: not-allowed;
+        }
+
+        .btn-clear {
+            background: #dc3545;
+            color: white;
+        }
+
+        .btn-clear:hover {
+            background: #c82333;
+        }
+
+        /* Dashboard Styles */
+        .dashboard-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: white;
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .stat-icon {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .stat-value {
+            font-size: 2em;
+            font-weight: bold;
+            color: #ff6b35;
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            color: #666;
+            font-size: 1em;
+        }
+
+        /* Inventory Styles */
+        .inventory-container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .inventory-controls {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .inventory-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .inventory-item {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .inventory-item:hover {
+            transform: translateY(-3px);
+        }
+
+        .inventory-item.low-stock {
+            border-left: 5px solid #ffc107;
+        }
+
+        .inventory-item.out-of-stock {
+            border-left: 5px solid #dc3545;
+        }
+
+        .inventory-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .item-name {
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .item-price {
+            color: #28a745;
+            font-weight: bold;
+        }
+
+        .stock-info {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+        }
+
+        .stock-controls {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .stock-input {
+            width: 60px;
+            padding: 5px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            text-align: center;
+        }
+
+        /* Receipt Styles */
+        .receipt {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            z-index: 1000;
+        }
+
+        .receipt-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            min-width: 350px;
+            max-width: 400px;
+        }
+
+        .receipt-header {
+            text-align: center;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #333;
+            padding-bottom: 15px;
+        }
+
+        .shop-name {
+            font-size: 1.8em;
+            font-weight: bold;
+            color: #ff6b35;
+            margin-bottom: 5px;
+        }
+
+        .receipt-info {
+            font-size: 0.9em;
+            color: #666;
+            margin-bottom: 15px;
+        }
+
+        .receipt-customer {
+            font-size: 0.9em;
+            color: #333;
+            margin-bottom: 15px;
+            padding: 10px;
+            background: #f8f9fa;
+            border-radius: 5px;
+        }
+
+        .receipt-table {
+            font-weight: bold;
+            color: #ff6b35;
+            text-align: center;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+        }
+
+        .receipt-items {
+            margin: 20px 0;
+        }
+
+        .receipt-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 5px 0;
+            border-bottom: 1px dotted #ccc;
+        }
+
+        .receipt-summary {
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid #ddd;
+        }
+
+        .receipt-summary-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
+        }
+
+        .receipt-total {
+            display: flex;
+            justify-content: space-between;
+            font-size: 1.3em;
+            font-weight: bold;
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 2px solid #333;
+        }
+
+        .receipt-footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 0.9em;
+            color: #666;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            background: none;
+            border: none;
+            font-size: 1.5em;
+            cursor: pointer;
+            color: #999;
+        }
+
+        .export-section {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .export-buttons {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .btn-export {
+            background: #17a2b8;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: background 0.3s ease;
+        }
+
+        .btn-export:hover {
+            background: #138496;
+        }
+
+        @media print {
+            body * {
+                visibility: hidden;
+            }
+            .receipt, .receipt * {
+                visibility: visible;
+            }
+            .receipt {
+                position: static;
+                background: white;
+            }
+            .receipt-content {
+                position: static;
+                transform: none;
+                box-shadow: none;
+            }
+            .close-btn {
+                display: none;
+            }
+        }
+
+        @media (max-width: 1200px) {
+            .billing-container {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+            
+            .stats-grid {
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            }
+            
+            .inventory-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <!-- Login Screen -->
+    <div id="loginScreen" class="login-container">
+        <div class="login-form">
+            <h2>☕ KADAK JUNCTION</h2>
+            <form onsubmit="login(event)">
+                <div class="form-group">
+                    <label for="staffName">Staff Name</label>
+                    <input type="text" id="staffName" required>
+                </div>
+                <div class="form-group">
+                    <label for="staffRole">Role</label>
+                    <select id="staffRole" required>
+                        <option value="">Select Role</option>
+                        <option value="Manager">Manager</option>
+                        <option value="Cashier">Cashier</option>
+                        <option value="Waiter">Waiter</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="staffPassword">Password</label>
+                    <input type="password" id="staffPassword" required>
+                </div>
+                <button type="submit" class="btn btn-print" style="width: 100%; margin-top: 10px;">
+                    🔐 Login
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Main Application -->
+    <div id="mainApp" class="hidden">
+        <div class="header">
+            <div class="header-left">
+                <h1>☕ KADAK JUNCTION</h1>
+                <p>Complete Cafe Management System</p>
+            </div>
+            <div class="header-right">
+                <div class="staff-info">
+                    Welcome, <span id="currentStaff"></span> (<span id="currentRole"></span>)
+                </div>
+                <button class="logout-btn" onclick="logout()">🚪 Logout</button>
+            </div>
+        </div>
+
+        <div class="nav-tabs">
+            <button class="tab active" onclick="switchTab('billing')">🧾 Billing</button>
+            <button class="tab" onclick="switchTab('dashboard')">📊 Dashboard</button>
+            <button class="tab" onclick="switchTab('inventory')">📦 Inventory</button>
+            <button class="tab" onclick="switchTab('reports')">📈 Reports</button>
+            <button class="tab" onclick="switchTab('settings')">⚙️ Settings</button>
+        </div>
+
+        <!-- Billing Tab -->
+        <div id="billing" class="tab-content active">
+            <div class="billing-container">
+                <!-- Table Selection -->
+                <div class="table-selection">
+                    <h3 class="section-title">🪑 Select Table</h3>
+                    <div class="tables-grid" id="tablesGrid">
+                        <!-- Tables will be generated by JavaScript -->
+                    </div>
+                </div>
+
+                <!-- Menu Section -->
+                <div class="menu-section">
+                    <h3 class="section-title">📋 Menu</h3>
+                    <div id="menuContainer">
+                        <!-- Menu items will be generated by JavaScript -->
+                    </div>
+                </div>
+
+                <!-- Billing Section -->
+                <div class="billing-section">
+                    <div class="current-table" id="currentTableDisplay">
+                        Select a table to start billing
+                    </div>
+                    
+                    <!-- Customer Details -->
+                    <div class="customer-details">
+                        <h4 style="margin-bottom: 10px; color: #ff6b35;">Customer Details (Optional)</h4>
+                        <div class="customer-row">
+                            <input type="text" id="customerName" placeholder="Customer Name">
+                            <input type="tel" id="customerPhone" placeholder="Phone Number">
+                        </div>
+                    </div>
+                    
+                    <div class="current-bill" id="currentBillContainer">
+                        <div id="billItems"></div>
+                    </div>
+                    
+                    <!-- GST Toggle -->
+                    <div class="gst-toggle">
+                        <input type="checkbox" id="gstEnabled" onchange="updateBillSummary()">
+                        <label for="gstEnabled">Include GST (18%)</label>
+                    </div>
+                    
+                    <!-- Bill Summary -->
+                    <div class="bill-summary">
+                        <div class="summary-row">
+                            <span>Subtotal:</span>
+                            <span id="subtotalAmount">₹0</span>
+                        </div>
+                        <div class="summary-row" id="gstRow" style="display: none;">
+                            <span>GST (18%):</span>
+                            <span id="gstAmount">₹0</span>
+                        </div>
+                        <div class="summary-row total">
+                            <span>Total:</span>
+                            <span id="totalAmount">₹0</span>
+                        </div>
+                    </div>
+
+                    <div class="action-buttons">
+                        <button class="btn btn-print" onclick="generateBill()" id="printBtn" disabled>🖨️ Print & Bill</button>
+                        <button class="btn btn-clear" onclick="clearCurrentTable()">🗑️ Clear Table</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Dashboard Tab -->
+        <div id="dashboard" class="tab-content">
+            <div class="dashboard-container">
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon">💰</div>
+                        <div class="stat-value" id="todayRevenue">₹0</div>
+                        <div class="stat-label">Today's Revenue</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">📋</div>
+                        <div class="stat-value" id="todayOrders">0</div>
+                        <div class="stat-label">Today's Orders</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">📅</div>
+                        <div class="stat-value" id="monthlyRevenue">₹0</div>
+                        <div class="stat-label">Monthly Revenue</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">⭐</div>
+                        <div class="stat-value" id="avgOrder">₹0</div>
+                        <div class="stat-label">Average Order</div>
+                    </div>
+                </div>
+
+                <div class="daily-sales">
+                    <h3 class="section-title">📈 Today's Sales Summary</h3>
+                    <div id="dailySalesList"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Inventory Tab -->
+        <div id="inventory" class="tab-content">
+            <div class="inventory-container">
+                <div class="inventory-controls">
+                    <h3 class="section-title">📦 Inventory Management</h3>
+                    <div class="export-buttons">
+                        <button class="btn-export" onclick="exportInventory()">📊 Export Inventory</button>
+                        <button class="btn btn-clear" onclick="resetInventory()">🔄 Reset All Stock</button>
+                    </div>
+                </div>
+                <div class="inventory-grid" id="inventoryGrid">
+                    <!-- Inventory items will be generated by JavaScript -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Reports Tab -->
+        <div id="reports" class="tab-content">
+            <div class="dashboard-container">
+                <div class="export-section">
+                    <h3 class="section-title">📊 Export Reports</h3>
+                    <div class="export-buttons">
+                        <button class="btn-export" onclick="exportDailySales()">📅 Export Daily Sales</button>
+                        <button class="btn-export" onclick="exportMonthlySales()">📈 Export Monthly Sales</button>
+                        <button class="btn-export" onclick="exportAllData()">💾 Export All Data</button>
+                        <button class="btn-export" onclick="exportCustomerData()">👥 Export Customer Data</button>
+                    </div>
+                </div>
+                
+                <div class="daily-sales">
+                    <h3 class="section-title">📊 Sales Reports</h3>
+                    <div id="monthlyReport"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Settings Tab -->
+        <div id="settings" class="tab-content">
+            <div class="dashboard-container">
+                <div class="export-section">
+                    <h3 class="section-title">⚙️ System Settings</h3>
+                    <div class="export-buttons">
+                        <button class="btn btn-clear" onclick="resetAllData()">🗑️ Reset All Data</button>
+                        <button class="btn-export" onclick="backupData()">💾 Backup Data</button>
+                        <button class="btn-export" onclick="document.getElementById('importFile').click()">📥 Import Data</button>
+                        <input type="file" id="importFile" accept=".json" style="display: none;" onchange="importData(event)">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Receipt Modal -->
+    <div class="receipt" id="receipt">
+        <div class="receipt-content">
+            <button class="close-btn" onclick="closeReceipt()">×</button>
+            <div class="receipt-header">
+                <div class="shop-name">KADAK JUNCTION</div>
+                <div>Your Perfect Tea & Snacks Destination</div>
+            </div>
+            <div class="receipt-info">
+                <div>Date: <span id="receiptDate"></span></div>
+                <div>Time: <span id="receiptTime"></span></div>
+                <div>Bill No: <span id="billNumber"></span></div>
+                <div>Staff: <span id="receiptStaff"></span></div>
+            </div>
+            <div class="receipt-customer" id="receiptCustomer"></div>
+            <div class="receipt-table" id="receiptTable"></div>
+            <div class="receipt-items" id="receiptItems"></div>
+            <div class="receipt-summary" id="receiptSummary"></div>
+            <div class="receipt-total">
+                <span>Total Amount:</span>
+                <span>₹<span id="receiptTotal"></span></span>
+            </div>
+            <div class="receipt-footer">
+                <div>Thank you for visiting!</div>
+                <div>Come again soon! 😊</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Global variables
+        let currentStaff = null;
+        let currentTable = null;
+        let tableBills = {}; // Store bills for each table
+        let salesData = JSON.parse(localStorage.getItem('kadakSalesData')) || [];
+        let billCounter = parseInt(localStorage.getItem('kadakBillCounter')) || 1;
+        let inventory = JSON.parse(localStorage.getItem('kadakInventory')) || {};
+        
+        // Default menu items with inventory
+        const defaultMenuItems = {
+            'Beverages': [
+                { name: 'Tea', price: 15, stock: 100 },
+                { name: 'Coffee', price: 20, stock: 80 },
+                { name: 'Boost', price: 25, stock: 50 },
+                { name: 'Horlicks', price: 25, stock: 50 },
+                { name: 'Special Tea', price: 20, stock: 60 },
+                { name: 'Cold Coffee', price: 35, stock: 40 }
+            ],
+            'Snacks': [
+                { name: 'Biscuits', price: 10, stock: 200 },
+                { name: 'Samosa', price: 12, stock: 50 },
+                { name: 'Vada Pav', price: 15, stock: 30 },
+                { name: 'Pakoda', price: 18, stock: 40 },
+                { name: 'Toast', price: 20, stock: 25 },
+                { name: 'Sandwich', price: 25, stock: 20 },
+                { name: 'Burger', price: 40, stock: 15 },
+                { name: 'Maggi', price: 30, stock: 35 }
+            ]
+        };
+
+        // Staff credentials (in real app, use proper authentication)
+        const staffCredentials = {
+            'admin': { password: 'admin123', role: 'Manager', name: 'Admin' },
+            //'admin': { password: 'admin123', role: 'Manager', name: 'Yathin N' },
+            'manager': { password: 'manager123', role: 'Manager', name: 'Manager' },
+            'cashier': { password: 'cash123', role: 'Cashier', name: 'Cashier' },
+            'waiter1': { password: 'waiter123', role: 'Waiter', name: 'Waiter 1' },
+            'waiter2': { password: 'waiter123', role: 'Waiter', name: 'Waiter 2' }
+        };
+
+        // Initialize inventory if empty
+        function initializeInventory() {
+            if (Object.keys(inventory).length === 0) {
+                Object.values(defaultMenuItems).flat().forEach(item => {
+                    inventory[item.name] = {
+                        price: item.price,
+                        stock: item.stock,
+                        minStock: 10,
+                        category: Object.keys(defaultMenuItems).find(cat => 
+                            defaultMenuItems[cat].some(i => i.name === item.name)
+                        )
+                    };
+                });
+                saveInventory();
+            }
+        }
+
+        // Login system
+        function login(event) {
+            event.preventDefault();
+            const staffName = document.getElementById('staffName').value.toLowerCase();
+            const staffRole = document.getElementById('staffRole').value;
+            const staffPassword = document.getElementById('staffPassword').value;
+
+            // Check credentials
+            const user = staffCredentials[staffName];
+            if (user && user.password === staffPassword && user.role === staffRole) {
+                currentStaff = {
+                    name: user.name,
+                    role: user.role,
+                    loginTime: new Date()
+                };
+                
+                document.getElementById('loginScreen').classList.add('hidden');
+                document.getElementById('mainApp').classList.remove('hidden');
+                document.getElementById('currentStaff').textContent = user.name;
+                document.getElementById('currentRole').textContent = user.role;
+                
+                initializeSystem();
+            } else {
+                alert('Invalid credentials! Please try again.');
+            }
+        }
+
+        function logout() {
+            if (confirm('Are you sure you want to logout?')) {
+                currentStaff = null;
+                currentTable = null;
+                document.getElementById('loginScreen').classList.remove('hidden');
+                document.getElementById('mainApp').classList.add('hidden');
+                
+                // Reset form
+                document.getElementById('staffName').value = '';
+                document.getElementById('staffRole').value = '';
+                document.getElementById('staffPassword').value = '';
+            }
+        }
+
+        // Initialize system
+        function initializeSystem() {
+            initializeInventory();
+            initializeTables();
+            generateMenu();
+            generateInventoryGrid();
+            updateDashboard();
+        }
+
+        // Initialize tables
+        function initializeTables() {
+            const tablesGrid = document.getElementById('tablesGrid');
+            tablesGrid.innerHTML = '';
+            
+            for (let i = 1; i <= 10; i++) {
+                const tableBtn = document.createElement('div');
+                tableBtn.className = 'table-btn';
+                tableBtn.onclick = () => selectTable(i);
+                tableBtn.innerHTML = `
+                    <div class="table-number">Table ${i}</div>
+                    <div class="table-status" id="status-${i}">Available</div>
+                    <div class="table-amount" id="amount-${i}"></div>
+                `;
+                tableBtn.id = `table-${i}`;
+                tablesGrid.appendChild(tableBtn);
+                
+                if (!tableBills[i]) {
+                    tableBills[i] = {};
+                }
+            }
+            updateTableStatuses();
+        }
+
+        // Generate menu from inventory
+        function generateMenu() {
+            const menuContainer = document.getElementById('menuContainer');
+            menuContainer.innerHTML = '';
+
+            Object.entries(defaultMenuItems).forEach(([categoryName, items]) => {
+                const categoryDiv = document.createElement('div');
+                categoryDiv.className = 'menu-category';
+                
+                const categoryTitle = document.createElement('div');
+                categoryTitle.className = 'category-title';
+                categoryTitle.innerHTML = `${categoryName === 'Beverages' ? '🍵' : '🍪'} ${categoryName}`;
+                
+                const menuItemsDiv = document.createElement('div');
+                menuItemsDiv.className = 'menu-items';
+                
+                items.forEach(item => {
+                    const stock = inventory[item.name]?.stock || 0;
+                    const menuItemDiv = document.createElement('div');
+                    menuItemDiv.className = 'menu-item';
+                    
+                    if (stock === 0) {
+                        menuItemDiv.classList.add('out-of-stock');
+                    } else if (stock <= inventory[item.name]?.minStock) {
+                        menuItemDiv.classList.add('low-stock');
+                    }
+                    
+                    menuItemDiv.onclick = () => {
+                        if (stock > 0) {
+                            addToBill(item.name, item.price);
+                        } else {
+                            alert(`${item.name} is out of stock!`);
+                        }
+                    };
+                    
+                    menuItemDiv.innerHTML = `
+                        <span class="item-name">${item.name}</span>
+                        <span class="item-price">₹${item.price}</span>
+                        <span class="stock-indicator ${stock === 0 ? 'out' : stock <= inventory[item.name]?.minStock ? 'low' : ''}">${stock}</span>
+                    `;
+                    
+                    menuItemsDiv.appendChild(menuItemDiv);
+                });
+                
+                categoryDiv.appendChild(categoryTitle);
+                categoryDiv.appendChild(menuItemsDiv);
+                menuContainer.appendChild(categoryDiv);
+            });
+        }
+
+        // Generate inventory grid
+        function generateInventoryGrid() {
+            const inventoryGrid = document.getElementById('inventoryGrid');
+            inventoryGrid.innerHTML = '';
+
+            Object.entries(inventory).forEach(([itemName, itemData]) => {
+                const inventoryItem = document.createElement('div');
+                inventoryItem.className = 'inventory-item';
+                
+                if (itemData.stock === 0) {
+                    inventoryItem.classList.add('out-of-stock');
+                } else if (itemData.stock <= itemData.minStock) {
+                    inventoryItem.classList.add('low-stock');
+                }
+                
+                inventoryItem.innerHTML = `
+                    <div class="inventory-header">
+                        <div class="item-name">${itemName}</div>
+                        <div class="item-price">₹${itemData.price}</div>
+                    </div>
+                    <div class="stock-info">
+                        <div>Current Stock: <strong>${itemData.stock}</strong></div>
+                        <div>Min Stock: <strong>${itemData.minStock}</strong></div>
+                    </div>
+                    <div class="stock-controls">
+                        <button class="btn btn-clear" onclick="updateStock('${itemName}', -10)">-10</button>
+                        <input type="number" class="stock-input" id="stock-${itemName}" value="${itemData.stock}" 
+                               onchange="setStock('${itemName}', this.value)">
+                        <button class="btn btn-print" onclick="updateStock('${itemName}', 10)">+10</button>
+                    </div>
+                `;
+                
+                inventoryGrid.appendChild(inventoryItem);
+            });
+        }
+
+        // Stock management functions
+        function updateStock(itemName, change) {
+            if (inventory[itemName]) {
+                inventory[itemName].stock = Math.max(0, inventory[itemName].stock + change);
+                saveInventory();
+                generateInventoryGrid();
+                generateMenu();
+                updateTableStatuses();
+            }
+        }
+
+        function setStock(itemName, newStock) {
+            if (inventory[itemName]) {
+                inventory[itemName].stock = Math.max(0, parseInt(newStock) || 0);
+                saveInventory();
+                generateInventoryGrid();
+                generateMenu();
+                updateTableStatuses();
+            }
+        }
+
+        function saveInventory() {
+            localStorage.setItem('kadakInventory', JSON.stringify(inventory));
+        }
+
+        // Table management
+        function selectTable(tableNumber) {
+            if (currentTable && currentTable !== tableNumber) {
+                saveCurrentBill();
+            }
+
+            currentTable = tableNumber;
+            
+            document.querySelectorAll('.table-btn').forEach(btn => btn.classList.remove('selected'));
+            document.getElementById(`table-${tableNumber}`).classList.add('selected');
+            
+            loadTableBill(tableNumber);
+            
+            document.getElementById('currentTableDisplay').textContent = `Table ${tableNumber} - Active`;
+            document.getElementById('printBtn').disabled = false;
+            
+            updateTableStatuses();
+        }
+
+        function saveCurrentBill() {
+            if (currentTable) {
+                tableBills[currentTable] = getCurrentBill();
+            }
+        }
+
+        function getCurrentBill() {
+            const billItems = {};
+            const billContainer = document.getElementById('billItems');
+            const items = billContainer.querySelectorAll('.bill-item');
+            
+            items.forEach(item => {
+                const name = item.dataset.itemName;
+                const price = parseInt(item.dataset.itemPrice);
+                const quantity = parseInt(item.querySelector('.quantity-display').textContent);
+                billItems[name] = { price, quantity };
+            });
+            
+            return billItems;
+        }
+
+        function loadTableBill(tableNumber) {
+            const bill = tableBills[tableNumber] || {};
+            const billItemsContainer = document.getElementById('billItems');
+            billItemsContainer.innerHTML = '';
+            
+            for (const [itemName, itemData] of Object.entries(bill)) {
+                const billItemDiv = document.createElement('div');
+                billItemDiv.className = 'bill-item';
+                billItemDiv.dataset.itemName = itemName;
+                billItemDiv.dataset.itemPrice = itemData.price;
+                billItemDiv.innerHTML = `
+                    <div>
+                        <strong>${itemName}</strong><br>
+                        <small>₹${itemData.price} each</small>
+                    </div>
+                    <div class="quantity-controls">
+                        <button class="qty-btn" onclick="removeFromBill('${itemName}', ${itemData.price})">-</button>
+                        <span class="quantity-display">${itemData.quantity}</span>
+                        <button class="qty-btn" onclick="addToBill('${itemName}', ${itemData.price})">+</button>
+                    </div>
+                    <div>
+                        <strong>₹${itemData.price * itemData.quantity}</strong>
+                    </div>
+                `;
+                billItemsContainer.appendChild(billItemDiv);
+            }
+            
+            updateBillSummary();
+        }
+
+        function addToBill(itemName, price) {
+            if (!currentTable) {
+                alert('Please select a table first!');
+                return;
+            }
+
+            // Check stock
+            if (inventory[itemName] && inventory[itemName].stock <= 0) {
+                alert(`${itemName} is out of stock!`);
+                return;
+            }
+
+            if (!tableBills[currentTable][itemName]) {
+                tableBills[currentTable][itemName] = { price: price, quantity: 0 };
+            }
+            tableBills[currentTable][itemName].quantity += 1;
+            
+            // Update stock
+            if (inventory[itemName]) {
+                inventory[itemName].stock -= 1;
+                saveInventory();
+            }
+            
+            loadTableBill(currentTable);
+            updateTableStatuses();
+            generateMenu(); // Refresh menu to show updated stock
+            
+            // Visual feedback
+            const clickedItem = event.target.closest('.menu-item');
+            if (clickedItem) {
+                clickedItem.classList.add('clicked');
+                setTimeout(() => clickedItem.classList.remove('clicked'), 300);
+            }
+        }
+
+        function removeFromBill(itemName, price) {
+            if (currentTable && tableBills[currentTable][itemName]) {
+                tableBills[currentTable][itemName].quantity -= 1;
+                
+                // Update stock back
+                if (inventory[itemName]) {
+                    inventory[itemName].stock += 1;
+                    saveInventory();
+                }
+                
+                if (tableBills[currentTable][itemName].quantity <= 0) {
+                    delete tableBills[currentTable][itemName];
+                }
+                
+                loadTableBill(currentTable);
+                updateTableStatuses();
+                generateMenu(); // Refresh menu to show updated stock
+            }
+        }
+
+        function updateBillSummary() {
+            if (!currentTable) return;
+            
+            const bill = tableBills[currentTable] || {};
+            let subtotal = 0;
+            
+            for (const [itemName, itemData] of Object.entries(bill)) {
+                subtotal += itemData.price * itemData.quantity;
+            }
+            
+            const gstEnabled = document.getElementById('gstEnabled').checked;
+            const gstAmount = gstEnabled ? Math.round(subtotal * 0.18) : 0;
+            const total = subtotal + gstAmount;
+            
+            document.getElementById('subtotalAmount').textContent = `₹${subtotal}`;
+            document.getElementById('gstAmount').textContent = `₹${gstAmount}`;
+            document.getElementById('totalAmount').textContent = `₹${total}`;
+            
+            const gstRow = document.getElementById('gstRow');
+            gstRow.style.display = gstEnabled ? 'flex' : 'none';
+        }
+
+        function updateTableStatuses() {
+            for (let i = 1; i <= 10; i++) {
+                const table = tableBills[i];
+                const statusEl = document.getElementById(`status-${i}`);
+                const amountEl = document.getElementById(`amount-${i}`);
+                const tableBtn = document.getElementById(`table-${i}`);
+                
+                let subtotal = 0;
+                let itemCount = 0;
+                
+                for (const [itemName, itemData] of Object.entries(table || {})) {
+                    subtotal += itemData.price * itemData.quantity;
+                    itemCount += itemData.quantity;
+                }
+                
+                const gstEnabled = document.getElementById('gstEnabled').checked;
+                const total = gstEnabled ? subtotal + Math.round(subtotal * 0.18) : subtotal;
+                
+                if (total > 0) {
+                    statusEl.textContent = `${itemCount} items`;
+                    amountEl.textContent = `₹${total}`;
+                    tableBtn.classList.add('occupied');
+                    tableBtn.classList.remove('available');
+                } else {
+                    statusEl.textContent = 'Available';
+                    amountEl.textContent = '';
+                    tableBtn.classList.remove('occupied');
+                    tableBtn.classList.add('available');
+                }
+            }
+        }
+
+        function generateBill() {
+            if (!currentTable) {
+                alert('Please select a table first!');
+                return;
+            }
+
+            const bill = tableBills[currentTable];
+            if (!bill || Object.keys(bill).length === 0) {
+                alert('No items in the bill!');
+                return;
+            }
+
+            const now = new Date();
+            const date = now.toLocaleDateString('en-IN');
+            const time = now.toLocaleTimeString('en-IN');
+            
+            // Get customer details
+            const customerName = document.getElementById('customerName').value.trim();
+            const customerPhone = document.getElementById('customerPhone').value.trim();
+            
+            // Calculate totals
+            let subtotal = 0;
+            for (const [itemName, itemData] of Object.entries(bill)) {
+                subtotal += itemData.price * itemData.quantity;
+            }
+            
+            const gstEnabled = document.getElementById('gstEnabled').checked;
+            const gstAmount = gstEnabled ? Math.round(subtotal * 0.18) : 0;
+            const total = subtotal + gstAmount;
+            
+            // Update receipt
+            document.getElementById('receiptDate').textContent = date;
+            document.getElementById('receiptTime').textContent = time;
+            document.getElementById('billNumber').textContent = String(billCounter).padStart(4, '0');
+            document.getElementById('receiptStaff').textContent = currentStaff.name;
+            document.getElementById('receiptTable').textContent = `TABLE ${currentTable}`;
+
+            // Customer info
+            const customerInfo = [];
+            if (customerName) customerInfo.push(`Name: ${customerName}`);
+            if (customerPhone) customerInfo.push(`Phone: ${customerPhone}`);
+            
+            const receiptCustomer = document.getElementById('receiptCustomer');
+            if (customerInfo.length > 0) {
+                receiptCustomer.textContent = customerInfo.join(' | ');
+                receiptCustomer.style.display = 'block';
+            } else {
+                receiptCustomer.style.display = 'none';
+            }
+
+            // Items
+            const receiptItemsContainer = document.getElementById('receiptItems');
+            receiptItemsContainer.innerHTML = '';
+
+            for (const [itemName, itemData] of Object.entries(bill)) {
+                const itemTotal = itemData.price * itemData.quantity;
+                const receiptItemDiv = document.createElement('div');
+                receiptItemDiv.className = 'receipt-item';
+                receiptItemDiv.innerHTML = `
+                    <div>${itemName} x ${itemData.quantity}</div>
+                    <div>₹${itemTotal}</div>
+                `;
+                receiptItemsContainer.appendChild(receiptItemDiv);
+            }
+
+            // Summary
+            const receiptSummary = document.getElementById('receiptSummary');
+            receiptSummary.innerHTML = `
+                <div class="receipt-summary-row">
+                    <span>Subtotal:</span>
+                    <span>₹${subtotal}</span>
+                </div>
+                ${gstEnabled ? `<div class="receipt-summary-row">
+                    <span>GST (18%):</span>
+                    <span>₹${gstAmount}</span>
+                </div>` : ''}
+            `;
+
+            document.getElementById('receiptTotal').textContent = total;
+            document.getElementById('receipt').style.display = 'block';
+            
+            // Save sale data
+            const saleRecord = {
+                date: date,
+                time: time,
+                table: currentTable,
+                items: { ...bill },
+                customerName: customerName,
+                customerPhone: customerPhone,
+                subtotal: subtotal,
+                gst: gstAmount,
+                total: total,
+                billNumber: billCounter,
+                staff: currentStaff.name,
+                staffRole: currentStaff.role
+            };
+            
+            salesData.push(saleRecord);
+            localStorage.setItem('kadakSalesData', JSON.stringify(salesData));
+            localStorage.setItem('kadakBillCounter', billCounter + 1);
+            
+            // Auto-print
+            setTimeout(() => {
+                window.print();
+                setTimeout(() => {
+                    closeReceipt();
+                    if (confirm('Bill printed successfully! Clear table for next customer?')) {
+                        clearCurrentTable();
+                        // Clear customer details
+                        document.getElementById('customerName').value = '';
+                        document.getElementById('customerPhone').value = '';
+                    }
+                }, 1000);
+            }, 500);
+            
+            billCounter++;
+            updateDashboard();
+        }
+
+        function clearCurrentTable() {
+            if (!currentTable) return;
+            
+            if (Object.keys(tableBills[currentTable]).length > 0) {
+                if (!confirm('Are you sure you want to clear this table?')) {
+                    return;
+                }
+                
+                // Return stock for all items
+                Object.entries(tableBills[currentTable]).forEach(([itemName, itemData]) => {
+                    if (inventory[itemName]) {
+                        inventory[itemName].stock += itemData.quantity;
+                    }
+                });
+                saveInventory();
+            }
+            
+            tableBills[currentTable] = {};
+            loadTableBill(currentTable);
+            updateTableStatuses();
+            generateMenu();
+        }
+
+        function closeReceipt() {
+            document.getElementById('receipt').style.display = 'none';
+        }
+
+        // Tab switching
+        function switchTab(tabName) {
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            
+            document.querySelectorAll('.tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            document.getElementById(tabName).classList.add('active');
+            event.target.classList.add('active');
+            
+            if (tabName === 'dashboard') {
+                updateDashboard();
+            } else if (tabName === 'inventory') {
+                generateInventoryGrid();
+            } else if (tabName === 'reports') {
+                updateReports();
+            }
+        }
+
+        // Dashboard functions
+        function updateDashboard() {
+            const today = new Date().toLocaleDateString('en-IN');
+            const currentMonth = new Date().getMonth();
+            const currentYear = new Date().getFullYear();
+            
+            const todaysSales = salesData.filter(sale => sale.date === today);
+            const todaysRevenue = todaysSales.reduce((sum, sale) => sum + sale.total, 0);
+            const todaysOrders = todaysSales.length;
+            
+            const monthlySales = salesData.filter(sale => {
+                const saleDate = new Date(sale.date.split('/').reverse().join('-'));
+                return saleDate.getMonth() === currentMonth && saleDate.getFullYear() === currentYear;
+            });
+            const monthlyRevenue = monthlySales.reduce((sum, sale) => sum + sale.total, 0);
+            
+            const avgOrder = todaysOrders > 0 ? Math.round(todaysRevenue / todaysOrders) : 0;
+            
+            document.getElementById('todayRevenue').textContent = `₹${todaysRevenue}`;
+            document.getElementById('todayOrders').textContent = todaysOrders;
+            document.getElementById('monthlyRevenue').textContent = `₹${monthlyRevenue}`;
+            document.getElementById('avgOrder').textContent = `₹${avgOrder}`;
+            
+            updateDailySalesList(todaysSales);
+        }
+
+        function updateDailySalesList(todaysSales) {
+            const salesList = document.getElementById('dailySalesList');
+            salesList.innerHTML = '';
+            
+            if (todaysSales.length === 0) {
+                salesList.innerHTML = '<p style="text-align: center; color: #666;">No sales today yet</p>';
+                return;
+            }
+            
+            const itemSales = {};
+            todaysSales.forEach(sale => {
+                Object.entries(sale.items).forEach(([itemName, itemData]) => {
+                    if (!itemSales[itemName]) {
+                        itemSales[itemName] = { quantity: 0, revenue: 0 };
+                    }
+                    itemSales[itemName].quantity += itemData.quantity;
+                    itemSales[itemName].revenue += itemData.price * itemData.quantity;
+                });
+            });
+            
+            const sortedItems = Object.entries(itemSales)
+                .sort(([,a], [,b]) => b.revenue - a.revenue);
+            
+            sortedItems.forEach(([itemName, data]) => {
+                const salesItem = document.createElement('div');
+                salesItem.className = 'sales-item';
+                salesItem.innerHTML = `
+                    <div>
+                        <strong>${itemName}</strong><br>
+                        <small>${data.quantity} units sold</small>
+                    </div>
+                    <div><strong>₹${data.revenue}</strong></div>
+                `;
+                salesList.appendChild(salesItem);
+            });
+        }
+
+        // Export functions
+        function exportDailySales() {
+            const today = new Date().toLocaleDateString('en-IN');
+            const todaysSales = salesData.filter(sale => sale.date === today);
+            exportToExcel(todaysSales, `Daily_Sales_${today.replace(/\//g, '-')}`);
+        }
+
+        function exportMonthlySales() {
+            const currentMonth = new Date().getMonth();
+            const currentYear = new Date().getFullYear();
+            const monthlySales = salesData.filter(sale => {
+                const saleDate = new Date(sale.date.split('/').reverse().join('-'));
+                return saleDate.getMonth() === currentMonth && saleDate.getFullYear() === currentYear;
+            });
+            const monthName = new Date().toLocaleDateString('en-IN', { month: 'long', year: 'numeric' });
+            exportToExcel(monthlySales, `Monthly_Sales_${monthName.replace(' ', '_')}`);
+        }
+
+        function exportAllData() {
+            exportToExcel(salesData, 'All_Sales_Data');
+        }
+
+        function exportCustomerData() {
+            const customerData = salesData.filter(sale => sale.customerName || sale.customerPhone)
+                .map(sale => ({
+                    date: sale.date,
+                    time: sale.time,
+                    customerName: sale.customerName || 'N/A',
+                    customerPhone: sale.customerPhone || 'N/A',
+                    total: sale.total,
+                    billNumber: sale.billNumber
+                }));
+            exportToExcel(customerData, 'Customer_Data');
+        }
+
+        function exportInventory() {
+            const inventoryData = Object.entries(inventory).map(([name, data]) => ({
+                item: name,
+                price: data.price,
+                currentStock: data.stock,
+                minStock: data.minStock,
+                category: data.category,
+                status: data.stock === 0 ? 'Out of Stock' : data.stock <= data.minStock ? 'Low Stock' : 'In Stock'
+            }));
+            exportToExcel(inventoryData, 'Inventory_Report');
+        }
+
+        function exportToExcel(data, filename) {
+            if (data.length === 0) {
+                alert('No data to export!');
+                return;
+            }
+            
+            // Create CSV content
+            const headers = Object.keys(data[0]).join(',');
+            const rows = data.map(row => 
+                Object.values(row).map(value => 
+                    typeof value === 'string' && value.includes(',') ? `"${value}"` : value
+                ).join(',')
+            );
+            
+            const csvContent = [headers, ...rows].join('\n');
+            
+            // Create and download file
+            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement('a');
+            const url = URL.createObjectURL(blob);
+            link.setAttribute('href', url);
+            link.setAttribute('download', `${filename}.csv`);
+            link.style.visibility = 'hidden';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
+        // Settings functions
+        function resetInventory() {
+            if (confirm('This will reset all stock levels to default values. Continue?')) {
+                Object.values(defaultMenuItems).flat().forEach(item => {
+                    if (inventory[item.name]) {
+                        inventory[item.name].stock = item.stock;
+                    }
+                });
+                saveInventory();
+                generateInventoryGrid();
+                generateMenu();
+                alert('Inventory has been reset to default levels.');
+            }
+        }
+
+        function resetAllData() {
+            if (confirm('This will delete ALL data (sales, inventory, etc.). Are you sure?')) {
+                if (confirm('This action cannot be undone. Continue?')) {
+                    localStorage.clear();
+                    location.reload();
+                }
+            }
+        }
+
+        function backupData() {
+            const backupData = {
+                salesData: salesData,
+                inventory: inventory,
+                billCounter: billCounter,
+                exportDate: new Date().toISOString()
+            };
+            
+            const blob = new Blob([JSON.stringify(backupData, null, 2)], { type: 'application/json' });
+            const link = document.createElement('a');
+            const url = URL.createObjectURL(blob);
+            link.setAttribute('href', url);
+            link.setAttribute('download', `kadak_backup_${new Date().toISOString().split('T')[0]}.json`);
+            link.style.visibility = 'hidden';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
+        function importData(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const backupData = JSON.parse(e.target.result);
+                    
+                    if (confirm('This will replace all current data. Continue?')) {
+                        if (backupData.salesData) {
+                            salesData = backupData.salesData;
+                            localStorage.setItem('kadakSalesData', JSON.stringify(salesData));
+                        }
+                        if (backupData.inventory) {
+                            inventory = backupData.inventory;
+                            saveInventory();
+                        }
+                        if (backupData.billCounter) {
+                            billCounter = backupData.billCounter;
+                            localStorage.setItem('kadakBillCounter', billCounter);
+                        }
+                        
+                        alert('Data imported successfully!');
+                        initializeSystem();
+                    }
+                } catch (error) {
+                                            alert('Invalid backup file format!');
+                    }
+                }
+            };
+            reader.readAsText(file);
+        
+
+        function updateReports() {
+            const monthlyReport = document.getElementById('monthlyReport');
+            monthlyReport.innerHTML = '';
+            
+            const monthlySales = {};
+            salesData.forEach(sale => {
+                const saleDate = new Date(sale.date.split('/').reverse().join('-'));
+                const monthKey = `${saleDate.getFullYear()}-${saleDate.getMonth() + 1}`;
+                
+                if (!monthlySales[monthKey]) {
+                    monthlySales[monthKey] = { revenue: 0, orders: 0, gst: 0 };
+                }
+                monthlySales[monthKey].revenue += sale.total;
+                monthlySales[monthKey].orders += 1;
+                monthlySales[monthKey].gst += sale.gst || 0;
+            });
+            
+            const sortedMonths = Object.entries(monthlySales)
+                .sort(([a], [b]) => b.localeCompare(a));
+            
+            if (sortedMonths.length === 0) {
+                monthlyReport.innerHTML = '<p style="text-align: center; color: #666;">No sales data available</p>';
+                return;
+            }
+            
+            sortedMonths.forEach(([monthKey, data]) => {
+                const [year, month] = monthKey.split('-');
+                const monthName = new Date(year, month - 1, 1).toLocaleDateString('en-IN', { month: 'long', year: 'numeric' });
+                
+                const reportItem = document.createElement('div');
+                reportItem.className = 'sales-item';
+                reportItem.innerHTML = `
+                    <div>
+                        <strong>${monthName}</strong><br>
+                        <small>${data.orders} orders | GST: ₹${data.gst}</small>
+                    </div>
+                    <div><strong>₹${data.revenue}</strong></div>
+                `;
+                monthlyReport.appendChild(reportItem);
+            });
+        }
+
+        // Initialize system when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            // Check if already logged in (for development)
+            if (localStorage.getItem('kadakLoggedIn') === 'true') {
+                const staffData = JSON.parse(localStorage.getItem('kadakCurrentStaff') || '{}');
+                if (staffData.name) {
+                    currentStaff = staffData;
+                    document.getElementById('loginScreen').classList.add('hidden');
+                    document.getElementById('mainApp').classList.remove('hidden');
+                    document.getElementById('currentStaff').textContent = staffData.name;
+                    document.getElementById('currentRole').textContent = staffData.role;
+                    initializeSystem();
+                }
+            }
+
+            // Auto-save functionality
+            setInterval(() => {
+                if (currentTable && currentStaff) {
+                    saveCurrentBill();
+                }
+            }, 30000);
+
+            // Print functionality
+            document.addEventListener('keydown', function(e) {
+                if (e.ctrlKey && e.key === 'p') {
+                    e.preventDefault();
+                    if (document.getElementById('receipt').style.display === 'block') {
+                        window.print();
+                    }
+                }
+            });
+            
+            // Prevent accidental page refresh
+            window.addEventListener('beforeunload', function(e) {
+                let hasActiveOrders = false;
+                for (let i = 1; i <= 10; i++) {
+                    if (tableBills[i] && Object.keys(tableBills[i]).length > 0) {
+                        hasActiveOrders = true;
+                        break;
+                    }
+                }
+                
+                if (hasActiveOrders && currentStaff) {
+                    e.preventDefault();
+                    e.returnValue = 'You have active orders. Are you sure you want to leave?';
+                }
+            });
+
+            // Save login state
+            window.addEventListener('beforeunload', function() {
+                if (currentStaff) {
+                    localStorage.setItem('kadakLoggedIn', 'true');
+                    localStorage.setItem('kadakCurrentStaff', JSON.stringify(currentStaff));
+                }
+            });
+        });
+
+        // Additional utility functions
+        function getTableTotal(tableNumber) {
+            const bill = tableBills[tableNumber] || {};
+            let subtotal = 0;
+            for (const [itemName, itemData] of Object.entries(bill)) {
+                subtotal += itemData.price * itemData.quantity;
+            }
+            const gstEnabled = document.getElementById('gstEnabled').checked;
+            return gstEnabled ? subtotal + Math.round(subtotal * 0.18) : subtotal;
+        }
+
+        function getAllActiveTables() {
+            const activeTables = [];
+            for (let i = 1; i <= 10; i++) {
+                if (Object.keys(tableBills[i] || {}).length > 0) {
+                    activeTables.push({
+                        table: i,
+                        total: getTableTotal(i),
+                        items: Object.keys(tableBills[i]).length
+                    });
+                }
+            }
+            return activeTables;
+        }
+
+        // Voice notifications (optional - requires user permission)
+        function playNotificationSound() {
+            try {
+                const audio = new Audio('data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQoGAACBhYqFbF1fdJivrJBhNjVgodDbq2EcBj+a2/LDciUFLIHO8tiJNwgZaLvt559NEAxQp+PwtmMcBjiR1/LMeSwFJHfH8N2QQAoUXrTp66hVFApGn+DyvmAaAzuL0fDCbSEFLITN8+WUNQIX4');
+                audio.play().catch(() => {}); // Ignore if audio fails
+            } catch (e) {
+                // Ignore audio errors
+            }
+        }
+
+        // Keyboard shortcuts
+        document.addEventListener('keydown', function(e) {
+            if (currentStaff && !e.ctrlKey && !e.altKey) {
+                // Quick table selection with number keys
+                if (e.key >= '1' && e.key <= '9') {
+                    const tableNum = parseInt(e.key);
+                    if (tableNum <= 10) {
+                        selectTable(tableNum);
+                        e.preventDefault();
+                    }
+                } else if (e.key === '0') {
+                    selectTable(10);
+                    e.preventDefault();
+                }
+            }
+        });
+
+        // Export functions for debugging (optional)
+        window.debugKadak = {
+            getSalesData: () => salesData,
+            getTableBills: () => tableBills,
+            getCurrentTable: () => currentTable,
+            getActiveTables: getAllActiveTables,
+            getInventory: () => inventory,
+            getCurrentStaff: () => currentStaff
+        };
+
+        // Performance monitoring
+        let performanceLog = [];
+        
+        function logPerformance(action, startTime) {
+            const endTime = performance.now();
+            performanceLog.push({
+                action: action,
+                duration: endTime - startTime,
+                timestamp: new Date().toISOString()
+            });
+            
+            // Keep only last 100 entries
+            if (performanceLog.length > 100) {
+                performanceLog = performanceLog.slice(-100);
+            }
+        }
+
+        // Error logging
+        window.addEventListener('error', function(e) {
+            console.error('Kadak Junction Error:', {
+                message: e.message,
+                filename: e.filename,
+                line: e.lineno,
+                column: e.colno,
+                error: e.error,
+                timestamp: new Date().toISOString(),
+                currentStaff: currentStaff,
+                currentTable: currentTable
+            });
+        });
+
+        // Service Worker registration for offline capability (optional)
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function() {
+                // Register service worker here if needed for offline functionality
+            });
+        }
+
+        // Auto-logout after inactivity (optional)
+        let inactivityTimer;
+        function resetInactivityTimer() {
+            clearTimeout(inactivityTimer);
+            inactivityTimer = setTimeout(() => {
+                if (currentStaff && confirm('You have been inactive for a while. Do you want to stay logged in?')) {
+                    resetInactivityTimer();
+                } else if (currentStaff) {
+                    logout();
+                }
+            }, 30 * 60 * 1000); // 30 minutes
+        }
+
+        // Reset timer on user activity
+        ['mousedown', 'mousemove', 'keypress', 'scroll', 'touchstart'].forEach(event => {
+            document.addEventListener(event, resetInactivityTimer, true);
+        });
+
+        // Network status monitoring
+        window.addEventListener('online', function() {
+            console.log('Network connection restored');
+        });
+
+        window.addEventListener('offline', function() {
+            console.log('Network connection lost - working offline');
+        });
+
+        // Initialize performance monitoring
+        resetInactivityTimer();
+    </script>
+</body>
+</html>

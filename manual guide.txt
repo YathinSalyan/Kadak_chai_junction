@@ -1,0 +1,156 @@
+🔐 New Advanced Features:
+1. Staff Login System
+
+Multiple user roles: Manager, Cashier, Waiter
+Secure login with username/password
+Default credentials:
+
+admin / admin123 (Manager)
+manager / manager123 (Manager)
+cashier / cash123 (Cashier)
+waiter1 / waiter123 (Waiter)
+
+
+Auto-logout after inactivity (30 mins)
+Staff tracking in receipts
+
+2. GST Calculations
+
+Toggle GST on/off (18%)
+Automatic calculation of GST amount
+Clear breakdown: Subtotal + GST = Total
+GST tracking in reports
+Receipt shows GST details
+
+3. Customer Details Capture
+
+Customer name and phone number
+Optional fields - not mandatory
+Appears on receipt when provided
+Customer data export feature
+Customer database for future reference
+
+4. Advanced Inventory Management
+
+Real-time stock tracking - automatically deducts when items ordered
+Stock indicators on menu items (Green/Yellow/Red)
+Low stock warnings - visual alerts
+Out of stock prevention - can't order unavailable items
+Manual stock adjustments (+10/-10 buttons or direct input)
+Stock levels shown on all menu items
+Inventory export to Excel
+
+5. Excel Export System
+
+Daily Sales export
+Monthly Sales export
+All Sales Data export
+Customer Data export
+Inventory Report export
+CSV format - opens in Excel
+Automatic filename with dates
+
+💼 Business Intelligence Features:
+Enhanced Dashboard:
+
+Today's Revenue with GST breakdown
+Order Count and average order value
+Monthly Performance tracking
+Best-selling items analysis
+Staff performance tracking
+
+Professional Receipts:
+
+Table number prominently displayed
+Staff name who served
+Customer details (if provided)
+GST breakdown when applicable
+Sequential bill numbers
+Professional formatting
+
+Data Management:
+
+Auto-backup functionality
+Data import/export capabilities
+Reset options for different scenarios
+Performance monitoring
+Error logging
+
+🎯 How to Use New Features:
+Daily Operations:
+
+Login → Enter staff credentials
+Select Table → Click table number or press 1-9 keys
+Add Customer Info → Optional name/phone
+Toggle GST → Check box if GST applies
+Add Items → Stock automatically tracked
+Print Bill → Auto-calculates GST and prints
+Export Reports → Various Excel exports available
+
+Inventory Management:
+
+View Stock → Inventory tab shows all items
+Adjust Stock → Use +10/-10 or type exact amount
+Monitor Levels → Color-coded alerts (Red = Out, Yellow = Low)
+Export Report → Get inventory status in Excel
+
+Business Reporting:
+
+Daily Reports → Dashboard shows today's performance
+Export Sales → Get Excel files for accounting
+Customer Analytics → Track customer data
+Monthly Trends → See business growth
+
+📊 Excel Export Includes:
+Sales Data:
+
+Date, Time, Bill Number
+Table Number, Staff Name
+Customer Details (if provided)
+Item-wise breakdown
+Subtotal, GST, Total amounts
+
+Inventory Report:
+
+Item name, current stock, minimum stock
+Price, category, status (In Stock/Low/Out)
+
+Customer Data:
+
+All customers with their order history
+Phone numbers for marketing
+
+🔧 System Benefits:
+For Management:
+
+Complete business overview - daily/monthly revenue
+Staff accountability - track who served which table
+Inventory control - prevent stockouts
+Tax compliance - GST calculations and records
+Data backup - never lose business data
+
+For Staff:
+
+Easy login system - role-based access
+Visual stock alerts - know what's available
+Customer service - capture customer details
+Professional receipts - builds business credibility
+
+For Accounting:
+
+GST-compliant receipts and reports
+Excel exports for easy bookkeeping
+Monthly summaries for tax filing
+Customer database for GST invoicing
+
+🚀 Ready for Professional Use:
+The system is now completely production-ready with:
+
+Data persistence - never loses information
+Offline capability - works without internet
+Print integration - connects to any printer
+Professional appearance - modern, clean interface
+Error handling - robust and reliable
+Performance monitoring - optimized for speed
+
+You can now run a complete cafe operation with this system! It handles everything from order taking to business analytics, inventory management to tax compliance.
